@@ -1,11 +1,16 @@
 Package: systematicQTL
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Systematic QTL pipeline
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Author: Luis Palomero
+Maintainer: Luis Palomero <lpalomerol@gmail.com>
+Description: Is a systematic approach to QTL pieline designed to be run "in one line".
+License: GPL-3
 Encoding: UTF-8
 LazyData: true
+RoxygenNote: 7.1.0
+Suggests: 
+    testthat,
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
