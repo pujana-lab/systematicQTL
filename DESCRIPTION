@@ -18,5 +18,7 @@ VignetteBuilder: knitr
 Imports: 
     qtl,
     qtl2,
-    utils
+    utils,
+    methods,
+    graphics
 Remotes: rqtl/qtl2

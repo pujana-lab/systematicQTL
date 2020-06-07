@@ -12,6 +12,8 @@
 #' @param comment.char List or string of allowed comment chars
 #' @param ... Additional arguments passed to read.cross function
 #'
+#' @export
+#'
 build_cross2_dataset <- function(
   geno_filename,
   pheno_filename,
