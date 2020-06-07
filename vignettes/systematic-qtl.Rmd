@@ -24,6 +24,7 @@ library(systematicQTL)
 
 ```{r load_data}
 
+
 geno_filename = '../tests/testthat/random.genotypes.csvs'
 pheno_filename  = '../tests/testthat/random.pheno.csv'
 
@@ -40,7 +41,7 @@ cross2 = systematicQTL::build_cross2_dataset(
 )
 
 qtl_wrapper = systematicQTL::QtlWrapper(qtl = cross2)
-  
+
 ```
 
 # Define lod thresholds
@@ -63,5 +64,24 @@ qtl_wrapper = systematicQTL::find_peaks(qtl_wrapper)
 for(phenotype in qtl_wrapper@phenotypes){
   systematicQTL::build_genescan_plot(qtl_wrapper, phenotype, sprintf('Pheno: %s', phenotype))
 }
+
+```
+
+## Extract significant lod scores for markers
+
+```{r get_lod_scores}
+
+lods = systematicQTL::lod(qtl_wrapper)
+
+for( i in 1:nrow(lods)){
+  this_lod = lods[i,]
+  systematicQTL::build_pdx_plot(
+    qtl_wrapper, chr = this_lod$chr, cm = this_lod$cm, 'signature1', 
+    sprintf('%s-signature1', this_lod$snp),
+    sprintf('LOD score: %.3f, (tresh. %.3f)', this_lod$signature1, this_lod$signature1.threshold)
+  )
+}
+
+print(lods)
 
 ```
