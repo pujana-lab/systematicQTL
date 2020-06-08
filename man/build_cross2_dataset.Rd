@@ -35,6 +35,35 @@ build_cross2_dataset(
 
 \item{...}{Additional arguments passed to read.cross function}
 }
+\value{
+This function returns an R/QTL Object of class "cross2". For details, see the \href{https://kbroman.org/qtl2/assets/vignettes/developer_guide.html}{R/QTL2} developer guide.
+}
 \description{
-Generates cross2 dataset from basic geno and phenotypes name. Geno file should combine genenotype values and mapping (see to_csvs_geno) and phenotypes table should be a matrix-type object (users in rows, phenotypes in columns)
+Generates cross2 dataset from basic geno and phenotypes name. Geno file should combine genenotype values and mapping (see to_csvs_geno) and phenotypes table should be a matrix-type object (users in rows, phenotypes in columns).
+ This function is the entry point to QtlWrapper object.
+}
+\examples{
+\dontrun{
+  geno_data_matrix_filename = '/path/to/geno_file'
+  geno_map_filename = '/path/to/geno_mapping_file'
+  phenotype_filenam = '/path/to/phenotypes_file'
+
+  genotypes_csvs  = to_csvs_geno(geno_map_filename, geno_data_matrix_filename)
+  write_csvs_geno(genotypes_csvs, '/path_to_geno_csvs')
+
+  chosen_alleles      = c('A','B')
+  chosen_covars       = c('pheno_var1', 'pheno_var2', 'pheno_var3')
+  chosen_phenotypes   = c('signature1', 'signature2', 'signature3')
+
+  cross2 = systematicQTL::build_cross2_dataset(
+    geno_filename = geno_filename,
+    pheno_filename = pheno_filename,
+    covar_column_names = chosen_covars,
+    pheno_column_names = chosen_phenotypes,
+    alleles = chosen_alleles
+  )
+
+}
+
+
 }
