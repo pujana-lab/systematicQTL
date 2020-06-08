@@ -15,5 +15,73 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup}
+
 library(systematicQTL)
+
+```
+
+# Data loading
+
+```{r load_data}
+
+
+geno_filename = '../tests/testthat/random.genotypes.csvs'
+pheno_filename  = '../tests/testthat/random.pheno.csv'
+
+chosen_alleles      = c('A','B')
+chosen_covars       = c('pheno_var1', 'pheno_var2', 'pheno_var3')
+chosen_phenotypes   = c('signature1', 'signature2', 'signature3')
+
+cross2 = systematicQTL::build_cross2_dataset(
+  geno_filename = geno_filename,
+  pheno_filename = pheno_filename,
+  covar_column_names = chosen_covars,
+  pheno_column_names = chosen_phenotypes,
+  alleles = chosen_alleles
+)
+
+qtl_wrapper = systematicQTL::QtlWrapper(qtl = cross2)
+
+```
+
+# Define lod thresholds
+
+```{r define lod_thresholds}
+
+qtl_wrapper = systematicQTL::set_empirical_significance_lod(qtl_wrapper, 100, 0.05, 1)
+
+qtl_wrapper = systematicQTL::set_significance_lod(qtl_wrapper,0.5)
+
+```
+
+
+# Compute peaks and describe them
+
+```{r build_peaks_and_describe_them}
+
+qtl_wrapper = systematicQTL::find_peaks(qtl_wrapper)
+
+for(phenotype in qtl_wrapper@phenotypes){
+  systematicQTL::build_genescan_plot(qtl_wrapper, phenotype, sprintf('Pheno: %s', phenotype))
+}
+
+```
+
+## Extract significant lod scores for markers
+
+```{r get_lod_scores}
+
+lods = systematicQTL::lod(qtl_wrapper)
+
+for( i in 1:nrow(lods)){
+  this_lod = lods[i,]
+  systematicQTL::build_pdx_plot(
+    qtl_wrapper, chr = this_lod$chr, cm = this_lod$cm, 'signature1', 
+    sprintf('%s-signature1', this_lod$snp),
+    sprintf('LOD score: %.3f, (tresh. %.3f)', this_lod$signature1, this_lod$signature1.threshold)
+  )
+}
+
+print(lods)
+
 ```
