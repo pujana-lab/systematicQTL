@@ -1,10 +1,10 @@
 Package: systematicQTL
 Type: Package
-Title: Systematic QTL pipeline
+Title: Pipeline to run sistematically QTL analysis
 Version: 0.1.0
 Author: Luis Palomero
 Maintainer: Luis Palomero <lpalomerol@gmail.com>
-Description: Is a systematic approach to QTL pieline designed to be run "in one line".
+Description: Is a systematic approach to QTL pipeline developed by Karl W Broman and published at \href{https://github.com/rqtl/qtl2}.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true

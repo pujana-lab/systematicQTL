@@ -48,9 +48,10 @@ qtl_wrapper = systematicQTL::QtlWrapper(qtl = cross2)
 
 ```{r define lod_thresholds}
 
-qtl_wrapper = systematicQTL::set_empirical_significance_lod(qtl_wrapper, 100, 0.05, 1)
 
 qtl_wrapper = systematicQTL::set_significance_lod(qtl_wrapper,0.5)
+
+qtl_wrapper = systematicQTL::set_empirical_significance_lod(qtl_wrapper, 100, 0.05, 1)
 
 ```
 
