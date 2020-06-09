@@ -51,6 +51,7 @@ Generates cross2 dataset from basic geno and phenotypes name. Geno file should c
   genotypes_csvs  = to_csvs_geno(geno_map_filename, geno_data_matrix_filename)
   write_csvs_geno(genotypes_csvs, '/path_to_geno_csvs')
 
+  chosen_genotypes    = c('A', 'H', 'B')
   chosen_alleles      = c('A','B')
   chosen_covars       = c('pheno_var1', 'pheno_var2', 'pheno_var3')
   chosen_phenotypes   = c('signature1', 'signature2', 'signature3')

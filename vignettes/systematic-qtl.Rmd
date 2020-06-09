@@ -22,6 +22,8 @@ library(systematicQTL)
 
 # Data loading
 
+We generate some sample data, genotypes and phenotypes, to show the functions of the package then, as the first step of the pipeline we generate the QTL cross2 object class with the function `build_cross2_dataset`.
+
 ```{r load_data}
 
 
@@ -44,7 +46,9 @@ qtl_wrapper = systematicQTL::QtlWrapper(qtl = cross2)
 
 ```
 
-# Define lod thresholds
+# Define LOD thresholds
+
+Next step is to set the minimal threshold for all signatures (0.5) and define the empirical significance value of the LOD
 
 ```{r define lod_thresholds}
 
@@ -55,8 +59,9 @@ qtl_wrapper = systematicQTL::set_empirical_significance_lod(qtl_wrapper, 100, 0.
 
 ```
 
-
 # Compute peaks and describe them
+
+We then find the peaks in a set of LOD curves with `find_peaks` and draw a plot for each phenotype peaks with `build_genescan_plot`.
 
 ```{r build_peaks_and_describe_them}
 
@@ -69,6 +74,8 @@ for(phenotype in qtl_wrapper@phenotypes){
 ```
 
 ## Extract significant lod scores for markers
+
+Finally we retrieve the LOD scores from the QTL object.
 
 ```{r get_lod_scores}
 
