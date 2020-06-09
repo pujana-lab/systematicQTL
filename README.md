@@ -1,13 +1,14 @@
-# Systematic QTL
+# Identification of immune/stromal cell quantitative trait loci linked to cancer risk
 
-This package contains the software tools developed for running the experiments which support the QTL-related results explained at "Immune Cell Associations with Cancer Risk", paper pending of publication. 
+This package contains the pipeline and tools developed for the study entitled "Immune Cell Associations with Cancer Risk". This is pipeline was developed and is maintained by Luis Palomero and Roderic Espin (MA Pujana’s lab, Catalan Institute of Oncology, IDIBELL).
 
-This is a systematic approach for [QTL pipeline developed and maintained by Karl Broman](https://github.com/rqtl/qtl2/).
+The pipeline includes the R package ConsensusTME (Jiménez-Sánchez et al., 2019; https://github.com/cansysbio/ConsensusTME), ssGSEA in Gene Set Variation Analysis (GSVA) (Hänzelmann et al., 2013; 10.18129/B9.bioc.GSVA), R/qtl2 (Broman et al., 2019; https://github.com/rqtl/qtl2), and bestNormalize (https://github.com/petersonR/bestNormalize).
+
 
 
 ## Installation
   
-To install it, the easiest is to use the R package devtools and its function install_github. To do so, open an R session and enter
+To install it use the R package devtools and its function install_github. Open an R session and enter the following commands:
 
 ```
 install.packages(c("devtools","curl")) ##Installs devtools 
@@ -19,19 +20,18 @@ install_github("pujana-lab/systematicQTL",ref="master")
 
 ### File description
 
-This pipeline requires to be run 3 files: 
- - Phenotypes data table in matrix format, where phenotype values mare in columns and users in rows. This file must be comma separated and first column (id column)  should be the user identifier.
- - A file with this tree columns:
-    - snp: The snp identifier
-    - chr: The chromosome number (1-22, X, Y) where the SNP is located.
-    - cm:  SNP distance (in centimorgans) to begining of the chromosome
- - A genotype data table file, where first column (id) is for user id, and other values are genotype values.
-
+This pipeline requires to run 3 files: 
+ - Phenotypes data table in matrix format, where phenotype values are in columns and cases in rows. This file must be comma separated and first column (ID column) should be case identifier.
+ - A file with these three columns:
+    - snp: snp identifier
+    - chr: chromosome number (1-22, X, Y) where SNP maps.
+    - cm:  SNP distance (cM) to chromosome start.
+ - A genotype data table, where first column (ID) is for cases and other values are genotypes.
 
 
 ### Object definition
 
-Due R/QTL2 file requires filenames to be build, is necessary construct this object in two steps: 
+Given that R/QTL2 requires filenames to be build, it is necessary to generate this object in two steps: 
  - Define the genotype CSVS file from genotype and mapping files.
  - Call wrapper constructor setting also main phenotype column names and genotype ones
 
@@ -59,7 +59,7 @@ qtl_wrapper = systematicQTL::QtlWrapper(qtl = cross2)
 ### LOD thresholds definition
 
 
-There are to ways to define thresholds to considere LOD scores significant, the thresholds can be defined manually or using a [permutation test](https://kbroman.org/qtl2/assets/vignettes/user_guide.html#performing_a_permutation_test). 
+There are two ways to define LOD thresholds, manually or using permutations.
 
 ```
 qtl_wrapper = systematicQTL::set_significance_lod(qtl_wrapper,0.5)
@@ -70,7 +70,7 @@ qtl_wrapper = systematicQTL::set_empirical_significance_lod(qtl_wrapper, 100, 0.
 
 ### Peaks identification
 
-Next step is identify the associated peaks using [find_peaks](https://kbroman.org/qtl2/assets/vignettes/user_guide.html#finding_lod_peaks) considering previously computed threshold. Also,  helping method build_genescan_plot allows describe the different peak plots.
+Next step is to identify the associated peaks using find_peaks considering previously computed thresholds. Also, build_genescan_plot allows to obtain peak plots.
 
 ```
 qtl_wrapper = systematicQTL::find_peaks(qtl_wrapper)
@@ -81,7 +81,7 @@ for(phenotype in qtl_wrapper@phenotypes){
 
 ```
  
-### SNP assocaition and LOD score tables
+### SNP association and LOD score tables
 
 `Lod` method returns the LOD tables for all snps included annotating possible significant correlations with profided signatures. To describe them method `build_pdx_plot` can be executed, as in below example.
 
